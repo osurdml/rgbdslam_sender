@@ -13,12 +13,12 @@ class RequestSender {
 	}
 
 	void sendRequest(const ros::TimerEvent& event) {
-		ROS_INFO("Calling /rgbdslam/ros_ui send_all");
-
 		rgbdslam::rgbdslam_ros_ui srv;
 		srv.request.command = "send_all";
 
-		client.call(srv);
+		if(!client.call(srv)) {
+			ROS_WARN("Failed to call /rgbdslam/ros_ui");
+		}
 	}
 
 	private:
